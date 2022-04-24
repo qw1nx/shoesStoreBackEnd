@@ -8,8 +8,8 @@ const userSchema = new Schema ({
     city: {type: String, required: [true, 'City is required']},
     street: {type: String, required: [true, 'Street is required']},
     streetNumber: {type: String, required: [true, 'Street number is required']},
-    productsOrdered: {type: [ObjectId], required: [true, 'You can\'t order nothing']}
-
+    productsOrdered: {type: [ObjectId], required: [true, 'You can\'t order nothing']},
+    userId: { type: ObjectId, required: [true, 'You have to be logged in to make an order.']}
 })
 
 

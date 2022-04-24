@@ -1,3 +1,4 @@
+const Item = require('../models/Order');
 
 
 async function create(item) {
@@ -6,3 +7,19 @@ async function create(item) {
 
     return result;
 }
+
+
+
+async function getAll() {
+    return Item.find({});
+}
+
+async function getAllByUserId(userId){
+    return Item.find({userId: userId})
+}
+
+module.exports = {
+    getAll,
+    create,
+    getAllByUserId
+};

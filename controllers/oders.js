@@ -8,11 +8,16 @@ const api = require("../services/shoes");
 const {isAuth} = require("../middlewares/guards");
 const mapErrors = require("../utils/mapper");
 
-router.get('/', isAdmin(), async (req, res) => {
+router.get('/',isAuth() , isAdmin(), async (req, res) => {
     console.log(req.user);
     const data = await orderService.getAll();
     res.json(data);
 });
+
+router.get('/myOrders', isAuth(), async(req, res) => {
+    const myOrders = await orderService.getAllByUserId(req.user._id);
+    res.json(myOrders);
+})
 
 router.post('/', isAuth(), async (req, res) => {
     const item = {
@@ -23,11 +28,13 @@ router.post('/', isAuth(), async (req, res) => {
         city: req.body.city,
         street: req.body.street,
         streetNumber: req.body.streetNumber,
-        productsOrdered: req.user.productsOrdered
+        productsOrdered: req.body.productsOrdered,
+        userId: req.user._id
+
     };
 
     try {
-        const result = await api.create(item);
+        const result = await orderService.create(item);
         res.status(201).json(result);
     } catch (err) {
         console.error(err.message);

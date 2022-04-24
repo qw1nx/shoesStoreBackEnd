@@ -40,7 +40,7 @@ router.get('/:id', preload(), (req, res) => {
     res.json(item);
 });
 
-router.put('/:id', preload(), isAdmin(), async (req, res) => {
+router.put('/:id', preload(), isAuth, isAdmin(), async (req, res) => {
     const itemId = req.params.id;
     const item = {
         maker: req.body.maker,
